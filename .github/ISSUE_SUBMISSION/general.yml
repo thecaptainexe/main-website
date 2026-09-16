@@ -1,0 +1,49 @@
+name: General Issue
+description: Report a bug, problem, question, or anything else related to the project.
+title: ""
+labels: []
+body:
+
+* type: markdown
+  attributes:
+  value: |
+  Thanks for taking the time to submit an issue!
+
+  ```
+  Please provide as much information as possible so the issue can be understood and addressed.
+  ```
+
+* type: input
+  id: subject
+  attributes:
+  label: Subject
+  description: What is this issue about?
+  placeholder: "e.g. Website project cards are not loading"
+  validations:
+  required: true
+
+* type: textarea
+  id: description
+  attributes:
+  label: Description
+  description: Describe the issue, question, suggestion, or problem in detail.
+  placeholder: "Tell us what happened or what you need help with..."
+  validations:
+  required: true
+
+* type: textarea
+  id: steps
+  attributes:
+  label: Steps to reproduce
+  description: If this is a bug, explain how to reproduce it.
+  placeholder: |
+  1. Go to...
+  2. Click...
+  3. The issue happens...
+
+* type: textarea
+  id: additional
+  attributes:
+  label: Additional information
+  description: Add screenshots, error messages, device/browser details, or anything else that may help.
+  placeholder: "Anything else we should know?"
