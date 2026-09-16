@@ -10,7 +10,6 @@ on:
 permissions:
   contents: read
   discussions: write
-  issues: write
 
 jobs:
   moderate:
@@ -18,38 +17,63 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Moderate testimonial discussion
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const discussion = context.payload.discussion;
-            if (discussion.category?.name !== 'Testimonials') return;
+            if (!discussion || discussion.category?.name !== 'Testimonials') return;
 
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const number = discussion.number;
             const action = context.payload.action;
-            const labels = discussion.labels || [];
             const labelName = context.payload.label?.name;
-
-            if (action === 'created' || action === 'edited') {
-              await github.rest.issues.removeAllLabels({ owner, repo, issue_number: number });
-              await github.rest.issues.addLabels({ owner, repo, issue_number: number, labels: ['pending'] });
-            }
 
             const effectiveLabel = action === 'created' || action === 'edited' ? 'pending' : labelName;
             if (!['pending', 'approved', 'rejected'].includes(effectiveLabel)) return;
 
             const data = await github.graphql(`
-              query($owner: String!, $repo: String!, $number: Int!) {
+              query($owner: String!, $repo: String!, $number: Int!, $pendingName: String!) {
                 repository(owner: $owner, name: $repo) {
                   discussion(number: $number) {
                     id
+                    category { name }
+                    labels(first: 100) { nodes { id name } }
                     comments(first: 100) { nodes { body } }
                   }
+                  pendingLabel: label(name: $pendingName) { id name }
                 }
               }
-            `, { owner, repo, number });
-            const comments = data.repository.discussion?.comments?.nodes || [];
+            `, { owner, repo, number, pendingName: 'pending' });
+            const currentDiscussion = data.repository.discussion;
+            if (!currentDiscussion || currentDiscussion.category?.name !== 'Testimonials') return;
+
+            if (action === 'created' || action === 'edited') {
+              for (const label of currentDiscussion.labels?.nodes || []) {
+                await github.graphql(`
+                  mutation($discussionId: ID!, $labelId: ID!) {
+                    removeDiscussionLabel(input: {discussionId: $discussionId, labelId: $labelId}) {
+                      clientMutationId
+                    }
+                  }
+                `, { discussionId: currentDiscussion.id, labelId: label.id });
+              }
+
+              const pendingLabel = data.repository.pendingLabel;
+              if (!pendingLabel) {
+                core.warning('The repository label "pending" does not exist; leaving the discussion unlabeled.');
+              } else {
+                await github.graphql(`
+                  mutation($discussionId: ID!, $labelId: ID!) {
+                    addDiscussionLabel(input: {discussionId: $discussionId, labelId: $labelId}) {
+                      clientMutationId
+                    }
+                  }
+                `, { discussionId: currentDiscussion.id, labelId: pendingLabel.id });
+              }
+            }
+
+            const comments = currentDiscussion.comments?.nodes || [];
             const marker = `<!-- capbot:testimonial:${effectiveLabel} -->`;
             if (comments.some((comment) => comment.body?.includes(marker))) return;
 
@@ -65,14 +89,14 @@ jobs:
                   comment { id }
                 }
               }
-            `, { discussionId: data.repository.discussion.id, body: messages[effectiveLabel] });
+            `, { discussionId: currentDiscussion.id, body: messages[effectiveLabel] });
 
   cleanup_rejected:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Delete rejected testimonial discussions
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const owner = context.repo.owner;
@@ -80,7 +104,6 @@ jobs:
             const data = await github.graphql(`
               query($owner: String!, $repo: String!) {
                 repository(owner: $owner, name: $repo) {
-                  discussionCategories(first: 100) { nodes { id name } }
                   discussions(first: 100, states: OPEN) {
                     nodes {
                       id number category { name }
@@ -93,7 +116,7 @@ jobs:
 
             const rejected = data.repository.discussions.nodes.filter((discussion) =>
               discussion.category?.name === 'Testimonials' &&
-              discussion.labels.nodes.some((label) => label.name === 'rejected')
+              (discussion.labels?.nodes || []).some((label) => label.name === 'rejected')
             );
 
             for (const discussion of rejected) {
