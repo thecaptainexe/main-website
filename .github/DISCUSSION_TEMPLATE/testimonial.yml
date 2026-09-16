@@ -1,5 +1,3 @@
-name: Testimonial
-description: Share positive feedback about CaptainEXE's work.
 title: "[Testimonial] "
 labels:
   - pending
@@ -7,11 +5,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for sharing feedback about CaptainEXE's work.
+        Thanks for sharing feedback about CaptainEXE's work!
 
         Testimonials are for people who have used a CaptainEXE product or worked directly with CaptainEXE.
-        Please write plain text only: do not use Markdown, links, images, code, or formatting.
-        Keep it respectful, factual, and safe to publish. Submissions are reviewed before appearing on the website.
+
+        Please write plain text only. Do not use Markdown, links, images, code, or other formatting.
+
+        Keep your testimonial respectful, factual, and safe to publish. All submissions are reviewed before appearing on the website.
 
   - type: input
     id: name
@@ -26,14 +26,14 @@ body:
     id: role
     attributes:
       label: Role or relationship
-      description: Optional context such as collaborator, client, teammate, or community member.
+      description: Optional context, such as client, collaborator, teammate, or community member.
       placeholder: "e.g. Client"
 
   - type: textarea
     id: testimonial
     attributes:
       label: Testimonial
-      description: Share a brief plain-text endorsement based on using a product or working with CaptainEXE. Do not use Markdown.
+      description: Share your experience working with CaptainEXE or using a CaptainEXE product.
       placeholder: "I worked with CaptainEXE on..."
     validations:
       required: true
@@ -42,7 +42,7 @@ body:
     id: consent
     attributes:
       label: Consent
-      description: By submitting, you confirm that the testimonial may be publicly displayed after review.
+      description: By submitting, you confirm that your testimonial may be publicly displayed after review.
       options:
         - label: I understand that my testimonial may be reviewed before publication.
           required: true
