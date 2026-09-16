@@ -1,0 +1,1 @@
+{"name":"@captainexe/downloads","private":true,"version":"1.0.0","type":"module","scripts":{"dev":"vite --port 5177","build":"vite build"},"dependencies":{"@captainexe/shared":"file:../../packages/shared","react":"^19.2.8","react-dom":"^19.2.8"},"devDependencies":{"@vitejs/plugin-react":"^6.1.1","vite":"^8.3.0"}}

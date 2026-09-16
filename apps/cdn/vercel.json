@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://thecaptainexe.dev/",
+      "permanent": false
+    }
+  ]
+}

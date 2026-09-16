@@ -1,0 +1,108 @@
+name: Testimonial moderation
+
+on:
+  discussion:
+    types: [created, edited, labeled]
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  discussions: write
+  issues: write
+
+jobs:
+  moderate:
+    if: github.event_name == 'discussion'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Moderate testimonial discussion
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const discussion = context.payload.discussion;
+            if (discussion.category?.name !== 'Testimonials') return;
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const number = discussion.number;
+            const action = context.payload.action;
+            const labels = discussion.labels || [];
+            const labelName = context.payload.label?.name;
+
+            if (action === 'created' || action === 'edited') {
+              await github.rest.issues.removeAllLabels({ owner, repo, issue_number: number });
+              await github.rest.issues.addLabels({ owner, repo, issue_number: number, labels: ['pending'] });
+            }
+
+            const effectiveLabel = action === 'created' || action === 'edited' ? 'pending' : labelName;
+            if (!['pending', 'approved', 'rejected'].includes(effectiveLabel)) return;
+
+            const data = await github.graphql(`
+              query($owner: String!, $repo: String!, $number: Int!) {
+                repository(owner: $owner, name: $repo) {
+                  discussion(number: $number) {
+                    id
+                    comments(first: 100) { nodes { body } }
+                  }
+                }
+              }
+            `, { owner, repo, number });
+            const comments = data.repository.discussion?.comments?.nodes || [];
+            const marker = `<!-- capbot:testimonial:${effectiveLabel} -->`;
+            if (comments.some((comment) => comment.body?.includes(marker))) return;
+
+            const messages = {
+              pending: `${marker}\nThanks for your testimonial submission. It is pending manual moderation. Please keep the content plain text without Markdown, links, images, code, or formatting.`,
+              approved: `${marker}\nThanks — your testimonial has been approved and is queued for publication on the CaptainEXE website.`,
+              rejected: `${marker}\nThis testimonial was rejected during moderation. Common reasons include inappropriate, irrelevant, spam, or Markdown-formatted content. You may submit a revised plain-text testimonial if appropriate.`,
+            };
+
+            await github.graphql(`
+              mutation($discussionId: ID!, $body: String!) {
+                addDiscussionComment(input: {discussionId: $discussionId, body: $body}) {
+                  comment { id }
+                }
+              }
+            `, { discussionId: data.repository.discussion.id, body: messages[effectiveLabel] });
+
+  cleanup_rejected:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete rejected testimonial discussions
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const data = await github.graphql(`
+              query($owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
+                  discussionCategories(first: 100) { nodes { id name } }
+                  discussions(first: 100, states: OPEN) {
+                    nodes {
+                      id number category { name }
+                      labels(first: 20) { nodes { name } }
+                    }
+                  }
+                }
+              }
+            `, { owner, repo });
+
+            const rejected = data.repository.discussions.nodes.filter((discussion) =>
+              discussion.category?.name === 'Testimonials' &&
+              discussion.labels.nodes.some((label) => label.name === 'rejected')
+            );
+
+            for (const discussion of rejected) {
+              await github.graphql(`
+                mutation($discussionId: ID!) {
+                  deleteDiscussion(input: {discussionId: $discussionId}) {
+                    clientMutationId
+                  }
+                }
+              `, { discussionId: discussion.id });
+              core.info(`Deleted rejected testimonial discussion #${discussion.number}.`);
+            }

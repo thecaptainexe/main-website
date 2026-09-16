@@ -1,0 +1,16 @@
+{
+  "name": "@captainexe/cdn",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5179",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@captainexe/shared": "file:../../packages/shared"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0"
+  }
+}

@@ -1,0 +1,1 @@
+{"name":"@captainexe/shared","private":true,"version":"1.0.0","type":"module","exports":{"./github-api":"./github-api.js","./status-checks":"./status-checks.js","./contracts":"./contracts.js","./cursor-effects":"./cursor-effects.js","./cursor.css":"./cursor.css","./design-tokens.css":"./design-tokens.css","./app.css":"./app.css"}}

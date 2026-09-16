@@ -1,0 +1,30 @@
+{
+  "name": "captainexe-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev:website": "npm run dev --workspace @captainexe/website",
+    "dev:changelog": "npm run dev --workspace @captainexe/changelog",
+    "dev:status": "npm run dev --workspace @captainexe/status",
+    "dev:labs": "npm run dev --workspace @captainexe/labs",
+    "dev:downloads": "npm run dev --workspace @captainexe/downloads",
+    "dev:cdn": "npm run dev --workspace @captainexe/cdn",
+    "build:website": "npm run build --workspace @captainexe/website",
+    "build:changelog": "npm run build --workspace @captainexe/changelog",
+    "build:status": "npm run build --workspace @captainexe/status",
+    "build:labs": "npm run build --workspace @captainexe/labs",
+    "build:downloads": "npm run build --workspace @captainexe/downloads",
+    "build:cdn": "npm run build --workspace @captainexe/cdn",
+    "lint": "npm run lint --workspace @captainexe/website",
+    "test:shared": "node --test packages/shared/github-api.test.js"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.81.0",
+    "vite": "^8.3.0"
+  }
+}
