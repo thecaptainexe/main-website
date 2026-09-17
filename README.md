@@ -6,11 +6,11 @@ Official source repository for the CaptainEXE website and standalone subdomain a
 
 This npm-workspace monorepo contains:
 
-- `apps/website` → `https://thecaptainexe.dev`
-- `apps/changelog` → `https://changelog.thecaptainexe.dev`
-- `apps/status` → `https://status.thecaptainexe.dev`
-- `apps/labs` → `https://labs.thecaptainexe.dev`
-- `apps/downloads` → `https://downloads.thecaptainexe.dev`
+- `apps/website` → `https://thecaptainexe.me`
+- `apps/changelog` → `https://changelog.thecaptainexe.me`
+- `apps/status` → `https://status.thecaptainexe.me`
+- `apps/labs` → `https://labs.thecaptainexe.me`
+- `apps/downloads` → `https://downloads.thecaptainexe.me`
 - `packages/shared` → shared design tokens, contracts, and server utilities
 
 ## Tech stack

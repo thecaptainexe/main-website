@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thecaptainexe.dev/sitemap.xml
+Sitemap: https://thecaptainexe.me/sitemap.xml
