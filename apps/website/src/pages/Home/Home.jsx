@@ -4,6 +4,8 @@ import Testimonials from "../../components/Testimonials";
 import { SITE_CONFIG } from "../../config/site";
 import { fetchGithubProjectRepos, fetchGithubStats } from "../../services/github";
 
+const CDN_ASSET_BASE_URL = "https://cdn.thecaptainexe.me/assets";
+
 const techStack = [
   ["Android", "android.svg"],
   ["CSS", "css.svg"],
@@ -115,7 +117,7 @@ function Hero({ navigate }) {
               }}
               key={type}
             >
-              <img src={`/assets/${icon}`} alt="" width="21" height="21" />
+              <img src={`${CDN_ASSET_BASE_URL}/${icon}`} alt="" width="21" height="21" />
             </a>
           ))}
         </div>
@@ -170,7 +172,7 @@ function About() {
           <div className="tech-grid" aria-label="Technology stack">
             {techStack.map(([technology, icon]) => (
               <span className="tech-pill" key={technology}>
-                <img className="pill-icon" src={`/assets/${icon}`} alt="" width="18" height="18" loading="lazy" />
+                <img className="pill-icon" src={`${CDN_ASSET_BASE_URL}/${icon}`} alt="" width="18" height="18" loading="lazy" />
                 {technology}
               </span>
             ))}

@@ -6,6 +6,8 @@ import ProjectsPage from "./pages/Projects/ProjectsPage";
 import { installCursorEffects } from "@captainexe/shared/cursor-effects";
 import redirects from "../public/redirects.json";
 
+const CDN_ASSET_BASE_URL = "https://cdn.thecaptainexe.me/assets";
+
 function CursorEffects() {
   useEffect(() => {
     return installCursorEffects();
@@ -81,7 +83,7 @@ function Contact({ navigate }) {
                 key={link.label}
               >
                 <span className="contact-link-label">
-                  <img src={`/assets/${link.icon}`} alt="" width="22" height="22" />
+                  <img src={`${CDN_ASSET_BASE_URL}/${link.icon}`} alt="" width="22" height="22" />
                   {link.label}{link.placeholder ? " — coming soon" : ""}
                 </span>
               </a>
