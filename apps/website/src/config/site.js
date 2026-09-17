@@ -10,5 +10,5 @@ export const SITE_CONFIG = {
     roblox: "https://www.roblox.com/users/7659747044/profile",
     googleDeveloper: "https://g.dev/thecaptainexe",
   },
-  changelogUrl: "https://changelog.thecaptainexe.dev",
+  changelogUrl: "https://changelog.thecaptainexe.me",
 };

@@ -5,7 +5,7 @@ const versionLabel = (value = "") => value.replace(/^stable_/, "");
 const dateLabel = (value) => value ? new Date(value).toLocaleDateString() : "Not published";
 
 function Header() {
-  return <header><a className="brand" href="https://thecaptainexe.dev">CAPTAIN<span>.</span></a><nav><a href="https://thecaptainexe.dev">Home</a><a href="https://changelog.thecaptainexe.dev">Changelog</a><a href="https://status.thecaptainexe.dev">Status</a><a href="https://labs.thecaptainexe.dev">Labs</a></nav></header>;
+  return <header><a className="brand" href="https://thecaptainexe.me">CAPTAIN<span>.</span></a><nav><a href="https://thecaptainexe.me">Home</a><a href="https://changelog.thecaptainexe.me">Changelog</a><a href="https://status.thecaptainexe.me">Status</a><a href="https://labs.thecaptainexe.me">Labs</a></nav></header>;
 }
 
 function Details({ repo, onBack }) {

@@ -2,7 +2,7 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "https://thecaptainexe.dev/",
+      "destination": "https://thecaptainexe.me/",
       "permanent": false
     }
   ]

@@ -7,12 +7,12 @@ same install command for every project:
 
 | Project / hostname | Root Directory | Build command | Install command |
 | --- | --- | --- | --- |
-| Website / `thecaptainexe.dev` | `apps/website` | `npm run build` | `npm install` |
-| Changelog / `changelog.thecaptainexe.dev` | `apps/changelog` | `npm run build` | `npm install` |
-| Status / `status.thecaptainexe.dev` | `apps/status` | `npm run build` | `npm install` |
-| Labs / `labs.thecaptainexe.dev` | `apps/labs` | `npm run build` | `npm install` |
-| Downloads / `downloads.thecaptainexe.dev` | `apps/downloads` | `npm run build` | `npm install` |
-| CDN / `cdn.thecaptainexe.dev` | `apps/cdn` | `npm run build` | `npm install` |
+| Website / `thecaptainexe.me` | `apps/website` | `npm run build` | `npm install` |
+| Changelog / `changelog.thecaptainexe.me` | `apps/changelog` | `npm run build` | `npm install` |
+| Status / `status.thecaptainexe.me` | `apps/status` | `npm run build` | `npm install` |
+| Labs / `labs.thecaptainexe.me` | `apps/labs` | `npm run build` | `npm install` |
+| Downloads / `downloads.thecaptainexe.me` | `apps/downloads` | `npm run build` | `npm install` |
+| CDN / `cdn.thecaptainexe.me` | `apps/cdn` | `npm run build` | `npm install` |
 
 The apps run separately in development. From the repository root:
 
