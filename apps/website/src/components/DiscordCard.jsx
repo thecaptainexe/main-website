@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
 const DISCORD_USER_ID = import.meta.env.VITE_DISCORD_USER_ID || "";
-const DEFAULT_AVATAR_URL = "/assets/logo.svg";
-const DEFAULT_BANNER_URL = "/assets/banner.gif";
+const CDN_ASSET_BASE_URL = "https://cdn.thecaptainexe.me/assets";
+const DEFAULT_AVATAR_URL = `${CDN_ASSET_BASE_URL}/logo.svg`;
+const DEFAULT_BANNER_URL = `${CDN_ASSET_BASE_URL}/banner.gif`;
 const fallbackProfile = { id: "captain", username: "thecaptainexe", global_name: "Captain", avatar: null };
 const badges = [
-  { src: "/assets/developer-badge.gif", label: "Active Developer" },
-  { src: "/assets/moderator-badge.gif", label: "Moderator" },
+  { src: `${CDN_ASSET_BASE_URL}/developer-badge.gif`, label: "Active Developer" },
+  { src: `${CDN_ASSET_BASE_URL}/moderator-badge.gif`, label: "Moderator" },
 ];
 
 export default function DiscordCard() {
@@ -33,13 +34,11 @@ export default function DiscordCard() {
 
   useEffect(() => {
     const banner = new Image();
-    banner.onerror = () => setBannerUrl("/default-banner.svg");
+    banner.onerror = () => setBannerUrl(DEFAULT_AVATAR_URL);
     banner.src = DEFAULT_BANNER_URL;
   }, []);
 
-  const avatarUrl = avatarFallback || (profile.avatar && profile.id !== "captain"
-    ? `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png?size=256`
-    : DEFAULT_AVATAR_URL);
+  const avatarUrl = avatarFallback || DEFAULT_AVATAR_URL;
   const statusLabel = presence === "dnd" ? "Do not disturb" : presence;
 
   return (
@@ -55,7 +54,7 @@ export default function DiscordCard() {
         <div className="profile-details">
           <h3>
             Captain
-            <img className="verified-badge" src="/assets/verified.gif" alt="Verified" width="18" height="18" />
+            <img className="verified-badge" src={`${CDN_ASSET_BASE_URL}/verified.gif`} alt="Verified" width="18" height="18" />
           </h3>
           <p className="discord-username">@{profile.username || "thecaptainexe"}</p>
           <div className="discord-badges" aria-label="Discord profile badges">
