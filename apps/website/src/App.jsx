@@ -100,7 +100,7 @@ function RedirectPage({ target }) {
     const timer = window.setTimeout(() => { window.location.assign(target); }, 3000);
     return () => window.clearTimeout(timer);
   }, [target]);
-  return <main className="redirect-page section-container"><p className="eyebrow">External link</p><h1>Redirecting<span>.</span></h1><p>Taking you to GitHub in a few seconds.</p><a className="button button-primary" href={target}>Continue now ↗</a></main>;
+  return <main className="redirect-page section-container"><p className="eyebrow">External link</p><h1>Redirecting<span>.</span></h1><p>Taking you to your destination in a few seconds.</p><a className="button button-primary" href={target}>Continue now ↗</a></main>;
 }
 
 export default function App() {
