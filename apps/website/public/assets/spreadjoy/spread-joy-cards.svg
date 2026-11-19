@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="816" height="1056" viewBox="0 0 816 1056">
+  <rect width="816" height="1056" fill="#f2f0e8"/>
+  <g font-family="Georgia, serif" fill="#181713">
+    <text x="408" y="64" text-anchor="middle" font-size="30" letter-spacing="3">SPREAD JOY</text>
+  </g>
+  <g stroke="#181713" stroke-width="2" fill="#fff">
+    <rect x="48" y="92" width="340" height="210" rx="18"/>
+    <rect x="428" y="92" width="340" height="210" rx="18"/>
+    <rect x="48" y="322" width="340" height="210" rx="18"/>
+    <rect x="428" y="322" width="340" height="210" rx="18"/>
+    <rect x="48" y="552" width="340" height="210" rx="18"/>
+    <rect x="428" y="552" width="340" height="210" rx="18"/>
+    <rect x="48" y="782" width="340" height="210" rx="18"/>
+    <rect x="428" y="782" width="340" height="210" rx="18"/>
+  </g>
+  <g font-family="Georgia, serif" fill="#181713" text-anchor="middle">
+    <g><circle cx="218" cy="142" r="10" fill="#ff593d"/><text x="218" y="205" font-size="34">You belong</text><text x="218" y="244" font-size="34">here.</text></g>
+    <g><circle cx="598" cy="142" r="10" fill="#ff593d"/><text x="598" y="205" font-size="34">Your kindness</text><text x="598" y="244" font-size="34">matters.</text></g>
+    <g><circle cx="218" cy="372" r="10" fill="#ff593d"/><text x="218" y="435" font-size="34">Keep going.</text><text x="218" y="474" font-size="34">You can do it.</text></g>
+    <g><circle cx="598" cy="372" r="10" fill="#ff593d"/><text x="598" y="435" font-size="34">Hope looks</text><text x="598" y="474" font-size="34">good on you.</text></g>
+    <g><circle cx="218" cy="602" r="10" fill="#ff593d"/><text x="218" y="665" font-size="34">Someone is</text><text x="218" y="704" font-size="34">glad you're here.</text></g>
+    <g><circle cx="598" cy="602" r="10" fill="#ff593d"/><text x="598" y="665" font-size="34">Make today</text><text x="598" y="704" font-size="34">a little lighter.</text></g>
+    <g><circle cx="218" cy="832" r="10" fill="#ff593d"/><text x="218" y="895" font-size="34">You make a</text><text x="218" y="934" font-size="34">difference.</text></g>
+    <g><circle cx="598" cy="832" r="10" fill="#ff593d"/><text x="598" y="895" font-size="34">Small joys</text><text x="598" y="934" font-size="34">become big ones.</text></g>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" fill="#181713" text-anchor="middle" opacity=".55">
+    <text x="408" y="1030" font-size="16" letter-spacing="2">PRINT • CUT OUT • PASS IT ON • thecaptainexe.me/spreadjoy</text>
+  </g>
+</svg>
