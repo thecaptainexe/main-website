@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home";
 import DiscordCard from "./components/DiscordCard";
 import { SITE_CONFIG } from "./config/site";
 import ProjectsPage from "./pages/Projects/ProjectsPage";
+import SpreadJoyPage from "./pages/SpreadJoy/SpreadJoyPage";
 import { installCursorEffects } from "@captainexe/shared/cursor-effects";
 import redirects from "../public/redirects.json";
 
@@ -121,6 +122,7 @@ export default function App() {
   const page = (() => {
     if (path === "/contact") return <Contact navigate={navigate} />;
     if (path === "/project") return <ProjectsPage navigate={navigate} />;
+    if (path === "/spreadjoy") return <SpreadJoyPage navigate={navigate} />;
     const redirect = redirects[path.replace(/^\/+/, "")];
     if (redirect) return <RedirectPage target={redirect} />;
     return <Home navigate={navigate} />;
