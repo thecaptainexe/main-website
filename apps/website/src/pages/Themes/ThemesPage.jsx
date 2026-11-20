@@ -73,7 +73,7 @@ const dedicatedScenes = {
   "cat-caf-takeover": ["cat", "#ffc3a5", "#6b4c74"],
 };
 
-function SceneArt({ kind, colors }) {
+function SceneArt({ kind, colors, title, category }) {
   const [primary, secondary] = colors;
   if (kind === "city") return <svg className="scene-art" viewBox="0 0 600 340" aria-hidden="true"><g fill={secondary} opacity=".8"><rect x="40" y="190" width="70" height="150"/><rect x="125" y="145" width="92" height="195"/><rect x="235" y="205" width="65" height="135"/><rect x="320" y="120" width="110" height="220"/><rect x="445" y="170" width="115" height="170"/></g><g fill={primary}><rect x="52" y="210" width="8" height="14"/><rect x="80" y="210" width="8" height="14"/><rect x="145" y="168" width="10" height="12"/><rect x="180" y="168" width="10" height="12"/><rect x="347" y="145" width="12" height="15"/><rect x="386" y="145" width="12" height="15"/><rect x="470" y="195" width="11" height="13"/></g><path d="M0 320C130 270 470 370 600 300V340H0Z" fill="#090516"/><path d="M300 340V95" stroke={primary} strokeWidth="4" opacity=".35"/><circle cx="300" cy="94" r="42" fill="none" stroke={primary} strokeWidth="3"/></svg>;
   if (kind === "statue") return <svg className="scene-art" viewBox="0 0 600 340" aria-hidden="true"><defs><linearGradient id="statue-bg"><stop stopColor={secondary}/><stop offset="1" stopColor={primary}/></linearGradient></defs><rect width="600" height="340" fill="url(#statue-bg)" opacity=".35"/><path d="M300 70c-55 0-85 35-78 92l18 103h120l18-103c7-57-23-92-78-92Z" fill="#ddd3ca"/><circle cx="300" cy="66" r="48" fill="#e9e1d8"/><path d="M253 60c18-45 76-45 94 0-26 12-68 12-94 0Z" fill="#bbb1aa"/><path d="M245 170l55 28 55-28M300 198v67" stroke="#aaa09a" strokeWidth="8"/><g fill={primary}><rect x="70" y="250" width="100" height="12"/><rect x="430" y="250" width="100" height="12"/></g></svg>;
@@ -114,18 +114,64 @@ function SceneArt({ kind, colors }) {
   if (kind === "elevator") return <svg className="scene-art" viewBox="0 0 600 340" aria-hidden="true"><rect width="600" height="340" fill="#d9d7cf"/><rect x="155" y="30" width="290" height="310" rx="5" fill="#aaa9a2" stroke="#62636a" strokeWidth="10"/><rect x="180" y="55" width="240" height="285" fill="#27272d"/><g transform="translate(390 75)" fill="#c8c9c3"><rect width="34" height="230" rx="4"/><g fill="#f1cf4b"><circle cx="17" cy="34" r="8"/><circle cx="17" cy="70" r="8"/><circle cx="17" cy="106" r="8"/><circle cx="17" cy="142" r="8"/><circle cx="17" cy="178" r="8"/><circle cx="17" cy="214" r="8"/></g></g><path d="M300 55v285" stroke="#a9aaa6" strokeWidth="8"/><text x="300" y="335" textAnchor="middle" fill="#5f6068" fontSize="16">PLEASE HOLD</text></svg>;
   if (kind === "loading") return <svg className="scene-art" viewBox="0 0 600 340" aria-hidden="true"><rect width="600" height="340" fill="#09090c"/><circle cx="300" cy="170" r="82" fill="none" stroke="#2c2c38" strokeWidth="18"/><path d="M300 88a82 82 0 0 1 82 82" fill="none" stroke={primary} strokeWidth="18" strokeLinecap="round" className="loading-ring"/><text x="300" y="230" textAnchor="middle" fill="#aaa" fontSize="18" letterSpacing="4">PLEASE WAIT</text></svg>;
   if (kind === "picnic") return <svg className="scene-art" viewBox="0 0 600 340" aria-hidden="true"><rect width="600" height="340" fill="#b9df91"/><g fill="#fff" opacity=".9"><circle cx="100" cy="70" r="25"/><circle cx="130" cy="60" r="32"/><circle cx="500" cy="90" r="28"/></g><path d="M100 250h400l-45 90H145Z" fill="#f5b0b0"/><g fill="#fff"><rect x="100" y="250" width="50" height="45"/><rect x="200" y="250" width="50" height="45"/><rect x="300" y="250" width="50" height="45"/><rect x="400" y="250" width="50" height="45"/><rect x="150" y="295" width="50" height="45"/><rect x="250" y="295" width="50" height="45"/><rect x="350" y="295" width="50" height="45"/></g><g fill="#8a5d3b"><ellipse cx="300" cy="180" rx="60" ry="18"/><path d="M300 162c-30-45 30-45 0 0Z"/></g></svg>;
-  return <svg className="scene-art" viewBox="0 0 600 340" aria-hidden="true"><rect width="600" height="340" fill="#17151f"/><circle cx="300" cy="170" r="115" fill={primary} opacity=".25"/><circle cx="300" cy="170" r="78" fill="none" stroke={primary} strokeWidth="5"/><path d="M300 55v230M185 170h230" stroke={secondary} strokeWidth="3"/><g fill={primary}><circle cx="300" cy="55" r="8"/><circle cx="415" cy="170" r="8"/><circle cx="300" cy="285" r="8"/><circle cx="185" cy="170" r="8"/></g></svg>;
+  if (kind === "collage") {
+    const artSets = {
+      "Tech": ["CRT","FLOPPY","CHIP","CABLE","CD-ROM","HACKER","ROBOT","DIAL-UP","ROUTER","PIXEL","TERMINAL","GAME BOY","PAGER","NEON","HUD","DISK","BROWSER","LASER"],
+      "Pop Culture": ["MOVIE","TV","COMIC","SWORD","SHIP","MAP","MASK","POSTER","CREATURE","MAGIC","COSTUME","CAR","CASTLE","SWORD","SIGN","TICKET","LOGO","PROP"],
+      "Food": ["COFFEE","NOODLES","TACO","PIZZA","SUSHI","BOBA","CHEF","MENU","CAKE","CANDLE","TRAY","SODA","CHERRY","WAFFLE","CHOPSTICKS","CUP","PAN","SIGN"],
+      "Odd": ["DUCK","RUBBER DUCK","SIGN","PIRATE HAT","SUNGASSES","CAPTAIN","LILY PAD","FROG","BUBBLE","BANNER","CAT","YARN","CAKE","VHS","SPINNER","TAPE","POP","GHOST"],
+      "Travel": ["MAP","COMPASS","TRAIN","PALM","CAMERA","MOUNTAIN","PASSPORT","SIGN","SUITCASE","TICKET","CAB","SHIP","CACTUS","CAMP","GLIDER","BRIDGE","COAST","SOUVENIR"],
+      "Sports": ["BALL","COURT","SKATE","RACKET","BIKE","TROPHY","WHISTLE","NET","HOOP","PAD","GLOVE","CLEAT","SCORE","FLAG","JERSEY","BOARD","CAP","MEDAL"],
+      "Creative": ["BRUSH","PALETTE","QUILL","CANVAS","INK","CLAY","YARN","CAMERA","SCISSORS","FRAME","STAMP","PAPER","GOLD","CRAYON","TYPE","PENCIL","EASEL","SCROLL"],
+      "Weather": ["CLOUD","LIGHTNING","TORNADO","RADAR","SATELLITE","RAIN","SNOW","SUN","WIND","FLOOD","EMBER","ICE","GAUGE","CLOUD","BOLT","MAP","ALARM","RAIN"],
+      "Office": ["FORM","STAMP","LEDGER","FAX","PHONE","VAULT","FILE","TICKET","BADGE","SIGN","CALCULATOR","DESK","CLOCK","PAPER","PEN","MAIL","LOCK","COPY"],
+      "Fantasy": ["SWORD","SHIELD","POTION","DRAGON","CRYSTAL","CANDLE","SCROLL","RUNE","CROWN","STAFF","ORB","CHEST","CASTLE","MOON","BOOK","WING","GEM","MAP"],
+      "Minimal": ["GRID","CARD","LABEL","TYPE","SWATCH","LINE","ICON","BUTTON","PAPER","FRAME","CODE","DOT","RULER","BOX","NOTE","TILE","TABLE","STAMP"],
+      "Niche": ["MICROWAVE","TOASTER","ELEVATOR","PINBALL","VENDING","JUKEBOX","HOURGLASS","BUBBLE","CRADLE","PLASMA","POOL FLOAT","8-BALL","SPIROGRAPH","ETCH SKETCH","MOOD RING","CLAW","SAND","MACHINE"],
+      "Music": ["VINYL","MIC","TAPE","TRUMPET","AMPLIFIER","SPEAKER","PIANO","DRUM","GUITAR","LASER","NOTE","HEADPHONE","MIXER","DISCO","KEYBOARD","TICKET","VINYL","CAB"],
+      "History": ["MAP","TABLET","POTTERY","MANUSCRIPT","COMPASS","VASE","SWORD","SCROLL","COIN","RUNE","COLUMN","QUILL","CLOCK","HELMet","CROWN","CHART","SEAL","BOOK"],
+      "Dimensions": ["PORTAL","ROVER","PLANET","SHIP","ALIEN","ROBOT","TELESCOPE","RIFT","GEAR","MOON","STAR","CORE","SATELLITE","CAPSULE","HOLOGRAM","MAP","LENS","TIME"],
+      "Internet": ["WINDOW","CURSOR","EMOTICON","CHAT","SERVER","MAIL","PROFILE","BLOG","GIF","BROWSER","GLITTER","ICON","MOUSE","DISCORD","REDDIT","LIKE","TOP 8","CCD"],
+      "Wild Cards": ["GHOST","CLAW","POLICE TAPE","SPELLBOOK","CARNIVAL","PERISCOPE","CHAINSAW","CAVE","CRYSTAL","MAGIC","LIGHT","CAMERA","DOOR","SIGN","MASK","LANTERN","SWORD","BALLOON"],
+      "Vibe": ["SUNSET","STATUE","CHROME","TEXTURE","NEON","CACTUS","WINDOW","TAPE","PLASTIC","FLOWER","POLAROID","POSTER","CANDLE","BOOK","DESK","SKY","MUSIC","GLASS"]
+    };
+    const set = artSets[category] || artSets.Vibe;
+    const positions = [
+      [48,42],[148,32],[248,48],[348,30],[448,42],[548,32],
+      [92,118],[192,108],[292,120],[392,112],[492,118],
+      [48,210],[148,198],[248,214],[348,198],[448,210],[548,198],
+      [92,286],[292,278],[492,286]
+    ];
+    return <svg className="scene-art collage-art" viewBox="0 0 600 340" aria-hidden="true">
+      <rect width="600" height="340" fill="#17151f"/>
+      <rect x="12" y="12" width="576" height="316" rx="8" fill={colors[1]} opacity=".12"/>
+      {positions.map(([x,y], index) => (
+        <g key={`${set[index % set.length]}-${index}`} transform={`translate(${x} ${y}) rotate(${[-7,5,-4,8,0,-6][index % 6]} 38 38)`}>
+          <rect x="-38" y="-28" width="76" height="56" rx="7" fill="#f3eee2" stroke="#17151f" strokeWidth="5"/>
+          <rect x="-32" y="-22" width="64" height="44" rx="3" fill={index % 3 === 0 ? colors[0] : index % 3 === 1 ? colors[1] : "#e7e4dc"}/>
+          <text x="0" y="5" textAnchor="middle" fill={index % 3 === 2 ? "#17151f" : "#fff"} fontSize="8" fontWeight="900">{set[index % set.length]}</text>
+        </g>
+      ))}
+      <rect x="18" y="294" width="564" height="30" fill="#17151f" opacity=".92"/>
+      <text x="300" y="315" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="900" letterSpacing="2">{title.toUpperCase()}</text>
+    </svg>;
+  }
+  return <svg className="scene-art" viewBox="0 0 600 340" aria-hidden="true"><rect width="600" height="340" fill="#17151f"/></svg>;
 }
 
 function ThemeVisual({ theme, compact = false }) {
   const scene = dedicatedScenes[theme.slug];
+  const fallbackColors = theme.category === "Weather"
+    ? ["#73aee8", "#dcecff"]
+    : theme.category === "Odd"
+      ? ["#ff70b5", "#63efcb"]
+      : ["#c18fff", "#5f3c98"];
   return (
     <div className={`theme-visual visual-${theme.slug} ${scene ? "dedicated-theme" : "fallback-theme"} ${compact ? "is-compact" : ""}`}
       style={scene ? { "--theme-primary": scene[1], "--theme-secondary": scene[2] } : undefined}>
-      <div className="visual-grid" />
-      <div className="visual-orbit" />
-      <div className="visual-scanline" />
-      {scene && <SceneArt kind={scene[0]} colors={[scene[1], scene[2]]} />}
+      {scene
+        ? <SceneArt kind={scene[0]} colors={[scene[1], scene[2]]} title={theme.title} category={theme.category} />
+        : <SceneArt kind="collage" colors={fallbackColors} title={theme.title} category={theme.category} />}
       <span className="visual-chip">LIVE / {theme.category.toUpperCase()}</span>
       <div className="visual-copy">
         <span>CAPTAIN.EXE / THEME PREVIEW</span>
@@ -133,10 +179,20 @@ function ThemeVisual({ theme, compact = false }) {
         {!compact && <small>{theme.description}</small>}
       </div>
       {theme.slug === "duck-pond-chaos" && (
-        <div className="ducks" aria-hidden="true"><span>DUCK</span><span>DUCK</span><span>DUCK</span></div>
+        <div className="ducks" aria-hidden="true">
+          <span>DUCK</span><span>DUCK ☀</span><span>PIRATE DUCK</span><span>DUCK 🕶</span><span>WIZARD DUCK</span><span>ASTRO DUCK</span>
+          <span>FROG</span><span>LILY PAD</span><span>FROG</span><span>DUCK</span><span>CATTAIL</span><span>DUCK</span>
+        </div>
       )}
       {theme.slug === "dmv-waiting-line-ticket" && (
-        <div className="dmv-board"><b>NOW SERVING A184</b><span>YOUR NUMBER B927</span><small>EST. WAIT 4 HOURS</small></div>
+        <div className="dmv-scene" aria-label="DMV waiting line scene">
+          <div className="dmv-board"><b>NOW SERVING A184</b><span>YOUR NUMBER B927</span><small>EST. WAIT 4 HOURS</small></div>
+          <div className="dmv-queue" aria-hidden="true">
+            {["FORM","PEN","CLOCK","QUEUE","CHAIR","CHAIR","CLIPBOARD","SEAL","STAMP","APPOINTMENT"].map((item, index) => (
+              <span key={`${item}-${index}`}><i>{String(index + 1).padStart(2,"0")}</i>{item}</span>
+            ))}
+          </div>
+        </div>
       )}
       {theme.slug === "matrix-terminal" && (
         <div className="matrix-rain" aria-hidden="true">101011<br />00110<br />11001<br />01010<br />10011</div>
