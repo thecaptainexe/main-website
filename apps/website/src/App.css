@@ -123,6 +123,7 @@ main { overflow: hidden; }
 .button-small { padding: 10px 14px; font-size: .72rem; }
 .section-heading h1 { margin: 0; font-size: clamp(3rem, 8vw, 7rem); letter-spacing: -.08em; line-height: .95; }
 .page-lead { max-width: 600px; color: #a4a1ab; line-height: 1.7; }
+.coming-soon-page { min-height: calc(100vh - 100px); display: grid; align-content: center; padding-top: 72px; padding-bottom: 120px; }
 .project-page { padding-top: 72px; }
 .projects-grid-all { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .project-card h2 { margin: 0 0 14px; font-size: 1.45rem; }
