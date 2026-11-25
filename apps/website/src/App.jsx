@@ -5,6 +5,7 @@ import { SITE_CONFIG } from "./config/site";
 import ProjectsPage from "./pages/Projects/ProjectsPage";
 import SpreadJoyPage from "./pages/SpreadJoy/SpreadJoyPage";
 import ThemesPage from "./pages/Themes/ThemesPage";
+import ComingSoonPage from "./pages/ComingSoon/ComingSoonPage";
 import "./pages/Themes/Themes.css";
 import { installCursorEffects } from "@captainexe/shared/cursor-effects";
 import redirects from "../public/redirects.json";
@@ -126,6 +127,8 @@ export default function App() {
     if (path === "/project") return <ProjectsPage navigate={navigate} />;
     if (path === "/spreadjoy") return <SpreadJoyPage navigate={navigate} />;
     if (path === "/themes") return <ThemesPage navigate={navigate} />;
+    if (path === "/duck") return <ComingSoonPage title="Duck" navigate={navigate} />;
+    if (path === "/themehub") return <ComingSoonPage title="ThemeHub" navigate={navigate} />;
     const redirect = redirects[path.replace(/^\/+/, "")];
     if (redirect) return <RedirectPage target={redirect} />;
     return <Home navigate={navigate} />;
